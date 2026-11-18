@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <funções.h>
+#include <stdlib.h>
+
 int main() {
     Cliente banco[100];
     int t = 0;

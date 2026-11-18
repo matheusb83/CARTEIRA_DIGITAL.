@@ -2,7 +2,7 @@
 #define MEU_BANCO_H
 
 #define MAX_CLIENTES 100
-#define MAX_HIST 30
+#define MAX_HIST 5
 #define TAM_HIST 80
 
 /* codigos dos tipos de conta */
@@ -18,7 +18,7 @@ typedef struct {
 
 typedef struct {
     char  nome[35];
-    int   base;                          /* parte numerica: 1000, 1001, ... */
+    int   numero;                          /* parte numerica: 1000, 1001, ... */
     Conta contas[4];                     /* usa os indices 1, 2 e 3 */
     char  historico[MAX_HIST][TAM_HIST];
     int   qtd_hist;

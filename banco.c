@@ -22,11 +22,15 @@ void pausar(void) {
 }
 
 void addHistorico(Cliente *c, const char *msg) {
-    if (c->qtd_hist < MAX_HIST) {
-        strncpy(c->historico[c->qtd_hist], msg, TAM_HIST - 1);
-        c->historico[c->qtd_hist][TAM_HIST - 1] = '\0';
-        c->qtd_hist++;
+    /* historico guarda so as ultimas 5 mensagens: se encheu, descarta a mais antiga */
+    if (c->qtd_hist == MAX_HIST) {
+        for (int k = 1; k < MAX_HIST; k++)
+            strcpy(c->historico[k - 1], c->historico[k]);
+        c->qtd_hist--;
     }
+    strncpy(c->historico[c->qtd_hist], msg, TAM_HIST - 1);
+    c->historico[c->qtd_hist][TAM_HIST - 1] = '\0';
+    c->qtd_hist++;
 }
 
 static float saldoTotalCliente(const Cliente *c) {
@@ -39,7 +43,7 @@ static float saldoTotalCliente(const Cliente *c) {
 static void criarConta(Cliente *c, int tipo) {
     c->contas[tipo].existe = 1;
     c->contas[tipo].saldo = 0;
-    sprintf(c->contas[tipo].numero, "%d-%02d", c->base, tipo);
+    sprintf(c->contas[tipo].numero, "%d-%02d", c->numero, tipo);
 }
 
 static int buscarCliente(Cliente banco[], int t) {
@@ -47,7 +51,7 @@ static int buscarCliente(Cliente banco[], int t) {
     printf("Numero do cliente (ex: 1000): ");
     scanf("%d", &num);
     for (int i = 0; i < t; i++)
-        if (banco[i].base == num) return i;
+        if (banco[i].numero == num) return i;
     printf("Cliente nao encontrado.\n");
     return -1;
 }
@@ -88,7 +92,7 @@ void abrirBanco(Cliente banco[], int *t) {
     for (int i = 0; i < n; i++) {
         Cliente *c = &banco[i];
         memset(c, 0, sizeof(Cliente));
-        c->base = 1000 + i;
+        c->numero = 1000 + i;
 
         printf("\n--- Cliente %d ---\n", i + 1);
         printf("Nome: ");
@@ -251,7 +255,7 @@ void consultarHistorico(Cliente banco[], int t) {
 
     printf("\n== Historico de movimentacoes ==\n");
     for (int i = 0; i < t; i++) {
-        printf("%s (%d):\n", banco[i].nome, banco[i].base);
+        printf("%s (%d):\n", banco[i].nome, banco[i].numero);
         for (int k = 0; k < banco[i].qtd_hist; k++)
             printf("   - %s\n", banco[i].historico[k]);
     }

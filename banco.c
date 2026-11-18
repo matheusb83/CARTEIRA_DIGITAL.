@@ -1,34 +1,23 @@
-typedef struct {             // strutct pra gurdar os dados
-    char nome[35];          
-    int numero;
-    float corrente;
-    float salario;
-    float poupanca;
-    char historico[50];
-    int fez_emprestimo;
-} Cliente;
-
-void cadastrarCliente(Cliente banco[], int *t) {           // cadast. clientes 
+void cadastrarCliente(Cliente banco[], int *t, int c) {           // cadast. clientes 
     int i = *t;
     printf("nome do cliente: ");
     scanf(" %[^\n]", banco[i].nome);
 
-    printf("numero da conta: ");
-    scanf("%d", &banco[i].numero);
+    printf("deseja abrir corrente ou salario? (1/2)");
+    if(c == 1){
+        scanf("%f", &banco[i].corrente);
+    } else {
+        scanf("%f", &banco[i].salario);
+    }
 
-    printf("saldo conta corrente: ");
-    scanf("%f", &banco[i].corrente);
-
-    printf("saldo conta salario: ");
-    scanf("%f", &banco[i].salario);
-
-    printf("saldo conta poupanca: ");
+    printf("deseja abrir conta poupanca? ");
     scanf("%f", &banco[i].poupanca);
   
     strcpy(banco[i].historico, "Conta criada");     //historico incial + cliente não fez emprestimo
     banco[i].fez_emprestimo = 0;
   
     (*t)++;     //Aumenta a quantidade de clientes cadastrados
+    banco[i].numero =  (*t) 
     printf("Cliente cadastrado com sucesso!\n");
 }
 

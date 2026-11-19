@@ -4,8 +4,6 @@
 #include <time.h>
 #include "meu_banco.h"
 
-/* ---------- UTILITARIOS ---------- */
-
 void limparTela(void) {
 #ifdef _WIN32
     system("cls");
@@ -19,7 +17,7 @@ void pausar(void) {
 
     while ((ch = getchar()) != '\n' && ch != EOF);
 
-    printf("\nPressione ENTER para continuar...");
+    printf("Pressione ENTER para continuar...");
     getchar();
 }
 
